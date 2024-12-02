@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Document</title>
+    
+
+<script>
+    function validalas()
+    {
+        let nev = document.getElementById("nev");
+        let email = document.getElementById("email");
+        let n_hiba = false;
+
+        if(nev.value==""){
+            n_hiba = true;
+        }
+
+        let e_hiba = false;
+        if(email.value=="" || !email.value.includes("@") || !email.value.includes(".")){
+            e_hiba = true;
+        }
+
+        if(n_hiba){
+            nev.classList.add("is-invalid")
+            nev.classList.remove("is-valid")
+        }
+        else{
+            nev.classList.add("is-valid")
+            nev.classList.remove("is-invalid")
+        }
+
+        if(e_hiba){
+            email.classList.add("is-invalid")
+            email.classList.remove("is-valid")
+        }
+        else{
+            email.classList.add("is-valid")
+            email.classList.remove("is-invalid")
+        }
+
+
+        if(n_hiba==false && e_hiba==false){
+            document.getElementById("p").innerHTML = nev.value +" "+ email.value;
+        }
+
+    }   
+</script>
+
+</head>
+<body>
+
+    <form name="form" class="m-5">
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="nev" required placeholder="Nev">
+            <div class="valid-feedback">
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <input type="email" class="form-control" id="email" required placeholder="Email">
+            <div class="valid-feedback">
+            </div>
+          </div>
+
+        <button type="button" class="btn btn-primary" onclick="validalas()">Küldés</button>
+      </form>
+
+<p id="p"></p>
+
+
+</body>
+</html>
