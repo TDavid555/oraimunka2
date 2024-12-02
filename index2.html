@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Document</title>
+
+<script>
+function hozzaad(){
+    const node = document.createElement("li");
+    const textnode = document.createTextNode("+elem");
+    node.appendChild(textnode);
+    document.getElementById("lista").appendChild(node);
+
+    const node2 = document.createElement("button");
+    const textnode2 = document.createTextNode("Törlés");
+    node2.appendChild(textnode2);
+    document.getElementById("lista").appendChild(node2);
+
+}
+
+</script>
+
+</head>
+
+<body>
+<button onclick="hozzaad()">Gomb</button><br>
+
+<ul id="lista">
+    <li>elem1</li>
+</ul>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
