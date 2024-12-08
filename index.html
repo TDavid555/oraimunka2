@@ -3,72 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
-    
-
-<script>
-    function validalas()
-    {
-        let nev = document.getElementById("nev");
-        let email = document.getElementById("email");
-        let n_hiba = false;
-
-        if(nev.value==""){
-            n_hiba = true;
-        }
-
-        let e_hiba = false;
-        if(email.value=="" || !email.value.includes("@") || !email.value.includes(".")){
-            e_hiba = true;
-        }
-
-        if(n_hiba){
-            nev.classList.add("is-invalid")
-            nev.classList.remove("is-valid")
-        }
-        else{
-            nev.classList.add("is-valid")
-            nev.classList.remove("is-invalid")
-        }
-
-        if(e_hiba){
-            email.classList.add("is-invalid")
-            email.classList.remove("is-valid")
-        }
-        else{
-            email.classList.add("is-valid")
-            email.classList.remove("is-invalid")
-        }
-
-
-        if(n_hiba==false && e_hiba==false){
-            document.getElementById("p").innerHTML = nev.value +" "+ email.value;
-        }
-
-    }   
-</script>
-
 </head>
 <body>
 
-    <form name="form" class="m-5">
-        <div class="col-md-4">
-            <input type="text" class="form-control" id="nev" required placeholder="Nev">
-            <div class="valid-feedback">
-            </div>
-          </div>
+    <button id="b1">Gomb</button>
+    <button id="b2">Gomb2</button>
+    <button id="b3">Gomb3</button>
+    <button id="b4">Gomb4</button>
+    <p id="myElement"></p>
 
-          <div class="col-md-4">
-            <input type="email" class="form-control" id="email" required placeholder="Email">
-            <div class="valid-feedback">
-            </div>
-          </div>
 
-        <button type="button" class="btn btn-primary" onclick="validalas()">Küldés</button>
-      </form>
 
-<p id="p"></p>
+    <!-- <img src="azoklogov3.png" onLoad="alert('Kép betöltődött!')" />-->
+<input type="text" onFocus="this.style.backgroundColor='yellow'" onBlur="this.style.backgroundColor='white'" />
+<script>
+
+    const gomb = document.getElementById("b1");
+    gomb.addEventListener("click", function() {
+        alert("KATT");
+    });
+
+    document.body.addEventListener("click", function(event) {
+      if (event.target && event.target.matches("button")) {
+        alert("Gombra kattintottál!");
+      }
+    });
+
+    const element = document.getElementById("myElement");
+    element.textContent = "Új szöveggg!";
+    element.style.color = "red";
+    element.setAttribute("class", "newClass");
+
+    const newElement = document.createElement("div");
+    newElement.textContent = "Ez egy új div!";
+    document.body.appendChild(newElement);
+
+    const element2 = document.getElementById("myElement");
+    element2.insertAdjacentHTML("beforeend", "<p>Új bekezdés szövege</p>");
+
+    const oldElement3 = document.getElementById("oldElement3");
+    const newElement3 = document.createElement("div");
+    newElement3.textContent = "Ez egy új elemmm!";
+    document.body.replaceChild(newElement3, oldElement3);
+    
+    const divs = document.getElementsByTagName("div");
+    console.log(divs); // Az összes div elem
+</script>
+
+
 
 
 </body>
