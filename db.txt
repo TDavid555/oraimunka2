@@ -1,0 +1,182 @@
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Lebbencsleves","Brassói","Palacsinta");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Gulyásleves","Rakott krumpli","Túrófánk");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Húsleves","Húsos palacsinta","Tiramisu");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Tojásleves","Paprikás csirke","Linzer");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Kötött-tészta leves","Karajszelet","Pogácsa");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Palócleves","Paprikás krumpli","Perec");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Zöldborsóleves","Pacalpörkölt","Pizzás csiga");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Zöldbableves","Gombapaprikás","Kókuszos csavart csiga");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Húsgombócleves","Rizses hús","Kekszes pohárdesszert");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Bableves","Lecsó","Almás desszert");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Betyárleves","Tarhonya","Csigakeksz");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Halászlé","Tojáspörkölt","Gesztenyés szelet");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Krumplileves","Töltött paprika","Kókusz golyó");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Zöldségleves","Kolbászos lecsó","Piskóta");
+
+INSERT INTO etelek (Leves, Főétel, Desszert)
+VALUES ("Meggyleves","Birkapörkölt","Fahéjas tekercs");
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+
+namespace _0106_3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            
+        }
+
+        private const string ConnectionString =
+           "Server=localhost;Database=etelek;Uid=root;Pwd=;";
+
+        public void Levesek()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM etelek";
+                using (var command = new MySqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listBox1.Items.Add(reader["Leves"]);
+                    }
+                }
+            }
+        }
+
+        public void Főételek()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM etelek";
+                using (var command = new MySqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listBox1.Items.Add(reader["Főétel"]);
+                    }
+                }
+            }
+        }
+
+        public void Desszertek()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM etelek";
+                using (var command = new MySqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listBox1.Items.Add(reader["Desszert"]);
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            Levesek();
+            Főételek();
+            Desszertek();
+        }
+    }
+}
+
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Lebbencsleves","Brassói","Palacsinta",300);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Gulyásleves","Rakott krumpli","Túrófánk",400);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Húsleves","Húsos palacsinta","Tiramisu",450);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Tojásleves","Paprikás csirke","Linzer",500);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Kötött-tészta leves","Karajszelet","Pogácsa",200);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Palócleves","Paprikás krumpli","Perec",190);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Zöldborsóleves","Pacalpörkölt","Pizzás csiga",320);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Zöldbableves","Gombapaprikás","Kókuszos csavart csiga",310);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Húsgombócleves","Rizses hús","Kekszes pohárdesszert",456);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Bableves","Lecsó","Almás desszert",678);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Betyárleves","Tarhonya","Csigakeksz",910);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Halászlé","Tojáspörkölt","Gesztenyés szelet",234);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Krumplileves","Töltött paprika","Kókusz golyó",567);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Zöldségleves","Kolbászos lecsó","Piskóta",890);
+
+INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
+VALUES ("Meggyleves","Birkapörkölt","Fahéjas tekercs",123);
+
+
+
+
+
