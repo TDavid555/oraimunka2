@@ -1,49 +1,3 @@
-INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
-VALUES ("Lebbencsleves","Brassói","Palacsinta");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Gulyásleves","Rakott krumpli","Túrófánk");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Húsleves","Húsos palacsinta","Tiramisu");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Tojásleves","Paprikás csirke","Linzer");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Kötött-tészta leves","Karajszelet","Pogácsa");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Palócleves","Paprikás krumpli","Perec");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Zöldborsóleves","Pacalpörkölt","Pizzás csiga");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Zöldbableves","Gombapaprikás","Kókuszos csavart csiga");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Húsgombócleves","Rizses hús","Kekszes pohárdesszert");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Bableves","Lecsó","Almás desszert");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Betyárleves","Tarhonya","Csigakeksz");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Halászlé","Tojáspörkölt","Gesztenyés szelet");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Krumplileves","Töltött paprika","Kókusz golyó");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Zöldségleves","Kolbászos lecsó","Piskóta");
-
-INSERT INTO etelek (Leves, Főétel, Desszert)
-VALUES ("Meggyleves","Birkapörkölt","Fahéjas tekercs");
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,6 +5,32 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+
+
+namespace _0106_3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            
+        }
+
+        private const string ConnectionString =
+           "Server=localhost;Database=etelek;Uid=root;Pwd=;";
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -98,7 +78,7 @@ namespace _0106_3
                 {
                     while (reader.Read())
                     {
-                        listBox1.Items.Add(reader["Főétel"]);
+                        listBox2.Items.Add(reader["Foetel"]);
                     }
                 }
             }
@@ -115,20 +95,118 @@ namespace _0106_3
                 {
                     while (reader.Read())
                     {
-                        listBox1.Items.Add(reader["Desszert"]);
+                        listBox3.Items.Add(reader["Desszert"]);
                     }
                 }
             }
         }
 
+        public void Ar()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "SELECT * FROM etelek";
+                using (var command = new MySqlCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        listBox6.Items.Add(reader["Ar"]);
+                    }
+                }
+            }
+        }
+
+        int osszeg = 0;
         private void Form1_Load(object sender, EventArgs e)
         {
             Levesek();
             Főételek();
             Desszertek();
+            Ar();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string selected = listBox1.SelectedItem.ToString();
+
+            listBox4.Items.Add(selected);
+
+            int index = listBox1.SelectedIndex;
+
+            string p = listBox6.Items[index].ToString();
+            int p2 = int.Parse(p);
+            osszeg += p2;
+
+            listBox5.Items.Clear();
+            listBox5.Items.Add(osszeg);
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string selected = listBox2.SelectedItem.ToString();
+
+            listBox4.Items.Add(selected);
+
+            int index = listBox2.SelectedIndex;
+
+            string p = listBox6.Items[index].ToString();
+            int p2 = int.Parse(p);
+            osszeg += p2;
+
+            listBox5.Items.Clear();
+            listBox5.Items.Add(osszeg);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string selected = listBox3.SelectedItem.ToString();
+
+            listBox4.Items.Add(selected);
+
+            int index = listBox3.SelectedIndex;
+
+            string p = listBox6.Items[index].ToString();
+            int p2 = int.Parse(p);
+            osszeg += p2;
+
+            listBox5.Items.Clear();
+            listBox5.Items.Add(osszeg);
+        }
+
+        private void listBox6_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string valasztottak = listBox4.Items;
+            string fizetett = listBox5.Items;
+
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+                string query = "INSERT INTO rendelesek (Valasztottak, Fizetett) VALUES(@valasztottak, @fizetett)";
+            using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@",);
+                    command.Parameters.AddWithValue("@",);
+                    command.ExecuteNonQuery();
+                }
+            }
         }
     }
-}
+    }
+
+
 
 
 INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
@@ -175,6 +253,24 @@ VALUES ("Zöldségleves","Kolbászos lecsó","Piskóta",890);
 
 INSERT INTO etelek (Leves, Főétel, Desszert, Ár)
 VALUES ("Meggyleves","Birkapörkölt","Fahéjas tekercs",123);
+
+
+
+string selected = listBox1.SelectedItem.ToString();
+string fizetett = "aa";
+
+
+using (var connection = new MySqlConnection(ConnectionString))
+{
+    connection.Open();
+    string query = "INSERT INTO rendelesek (Valasztottak, Fizetett) VALUES(@Valasztottak, @Fizetett)";
+    using (var command = new MySqlCommand(query, connection))
+    {
+        command.Parameters.AddWithValue("@Title", selected);
+        command.Parameters.AddWithValue("@Author", fizetett);
+        command.ExecuteNonQuery();
+    }
+}
 
 
 
