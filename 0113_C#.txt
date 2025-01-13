@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _0113_2
+{
+    public class Student
+    {
+        private string Name { get; set; }
+        private int Age { get; set; }
+        protected List<int> Grades { get; set; }
+
+        public Student(string Name, int Age, List<int> Grades)
+        {
+            this.Name = Name;
+            this.Age = Age;
+            this.Grades = Grades;
+        }
+
+        public string GetName()
+        {
+            return Name;
+        }
+
+        protected int GetAge()
+        {
+            return Age;
+        }
+
+        public List<int> GetGrades()
+        {
+            return Grades;
+        }
+
+    }
+
+    public class StudentProcessor : Student
+    {
+        public StudentProcessor(string Name, int Age, List<int> Grades) : base(Name, Age, Grades)
+        {
+        }
+
+        public double CalculateAverage(Student student)
+        {
+            var grades = student.GetGrades();
+            return grades.Average();
+        }
+
+        public void PrintStudentDetails(Student student)
+        {
+            Console.Write(student.GetName()+" "+GetAge());
+
+
+        }
+    }
+
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> lista1 = new List<int>() { 1,2,3,4,5 };
+            List<int> lista2 = new List<int>() { 3,4,5,2,2 };
+            List<int> lista3 = new List<int>() { 3,5,4,4,5 };
+
+            Student student1 = new Student("Nev1",10,lista1);
+            Student student2 = new Student("Nev2", 11, lista2);
+            Student student3 = new Student("Nev3", 12, lista3);
+
+            StudentProcessor studproc = new StudentProcessor();
+            Console.WriteLine(studproc.CalculateAverage(student3));
+
+            studproc.PrintStudentDetails(student2);
+            
+
+
+            Console.ReadKey();
+        }
+    }
+}
