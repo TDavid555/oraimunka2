@@ -1,0 +1,139 @@
+#1. függvénnyel: hozzunk létre egy olyan adatszerkezetet ami tanulok neveihez tarol jegyeiket
+# 10 tanulo aktualis erdemjegyeit tárolja
+# a függ. gyűjtse ki azoknak a neveit akik legalább közepes érdemjegyet kaptak
+# a neveket egymás mellé vesszővel elválasztva
+
+def jegyek():
+    lista = []
+    tanulok = {
+        "tan1": 4,
+        "tan2": 5,
+        "tan3": 4,
+        "tan4": 5,
+        "tan5": 5,
+        "tan6": 3,
+        "tan7": 3,
+        "tan8": 2,
+        "tan9": 5,
+        "tan10": 2
+        
+    }
+
+    for x in tanulok:
+        if tanulok[x] >= 3:
+            lista.append(x+", ")
+
+    return lista
+
+
+for x in jegyek():
+    print(x, end =" ")
+
+print()
+
+#2. felhaszn. által listát: 10 db string. az eljárás paraméterként kapja meg a listát
+# megszámolja hány karakter van össz. ebben a listában
+# és bekér egy stringet, vizsgálat: annak a karakterei száma megegyezik e vele
+
+def karakterszam(lista2):
+    hossz = 0
+
+    for x in lista2:
+        hossz+=len(x)
+    
+    hossz2 = 0
+    beker = input("Kérem a szót: ")
+    hossz2 = len(beker)
+
+    if hossz == hossz2:
+        print("Megegyeznek!")
+    else:
+        print("Nem egyeznek meg!")
+
+
+#lista2 = []
+#for x in range (1,11,1):
+ #  stringek = input("Kérem a szavakat: ")
+  # lista2.append(stringek)
+
+#karakterszam(lista2)
+
+
+
+#3. függvény: létrehoz egy ol adatszerkezetet ami nem engedélyezi a duplikációt, tárolj ebben 5 int
+# átlag, 1 tizedes pontossággal adja vissza
+
+def atlag():
+    halmaz = {1,2,3,4,51}
+
+    osszeg = 0
+    for x in halmaz:
+        osszeg+=x
+    
+    atlag = osszeg/len(halmaz)
+
+    return atlag
+
+print(atlag())
+
+
+
+#4. függ: megkap param-ként 1 db int. ezt felhasználva egy olyan adatszerkezetben tárolunk intet listaban
+# a listában szereplő elemek közül hanyadik helyen áll az az érték amely az utolsó szám páros
+ 
+def ertek(szam):
+    lista3 = []
+    for x in range(1,szam+1):
+        bekerszam = input("Kérem a számo(ka)t: ")
+        lista3.append(int(bekerszam))
+
+    paros = 0
+    paroshelye = 0
+    for x in lista3:
+        if x %2 == 0:
+            paros = x
+
+    for x in range(1,len(lista3),1):
+        if lista3[x] == paros:
+            paroshelye = x
+
+    return paroshelye+1
+
+
+szam = 4
+#print(ertek(szam))
+
+
+#5. eljárás: az elj megkap 1 string (mondat). validalas: helyes-e a mondat (nagy kezdobetu, vegen  irasjel)
+# teljes kiertekeles
+# ha igen: számold meg hány db "a" szerepel benne
+# milyen nyelvtani szerkezet (kerdo, kijelento...)
+
+
+def validalas(mondat):
+    helyes = False
+    if mondat[0] == mondat[0].upper() and (mondat[len(mondat)-1] == "." or mondat[len(mondat)-1] == "!" or mondat[len(mondat)-1] == "?"):
+        print("A mondat helyes!")
+        helyes = True
+    else:
+        print("Ez a mondat helytelen!")
+
+    db = 0
+    for x in mondat:
+        if x == "a" or x == "A":
+            db+=1
+    print (f"Az `a` betűk száma: {db}")
+
+    if helyes:
+        if mondat[len(mondat)-1] == ".":
+            print("Ez egy kijelentő mondat!")
+
+        if mondat[len(mondat)-1] == "!":
+            print("Ez egy felkiáltó/felszólító/óhajtó mondat!")
+
+        if mondat[len(mondat)-1] == "?":
+            print("Ez egy kérdő mondat!")
+        
+    
+mondat = "Ez egy mondaaat?"
+validalas(mondat)
