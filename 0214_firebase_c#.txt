@@ -1,0 +1,117 @@
+térgeomatria:
+háromszög szerkeszthetősége
+a+b>c
+a+c>b
+b+c>a
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Firebase.Database;
+using Firebase.Database.Query;
+
+
+namespace _0214
+{ 
+
+    public partial class Form1 : Form
+    {
+        private static FirebaseClient adatbazis;
+
+
+        public Form1()
+        {
+            string firebase = "https://project-7522476285270383413-default-rtdb.firebaseio.com/";
+            adatbazis = new FirebaseClient(firebase);
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+
+            int a_value = int.Parse(a.Text);
+            int b_value = int.Parse(b.Text);
+            int c_value = int.Parse(c.Text);
+
+            if ((a_value+b_value)>c_value && (a_value + c_value) > b_value && (b_value + c_value) > a_value)
+            {
+                //MessageBox.Show("igen");
+                var eredmeny = new { eredmeny = true };
+                await adatbazis.Child("Matek").Child("tergeometria").Child("elsof").PutAsync(eredmeny);
+
+            }
+            else
+            {
+                //MessageBox.Show("nem");
+                var eredmeny = new { eredmeny = false };
+                await adatbazis.Child("Matek").Child("tergeometria").Child("elsof").PutAsync(eredmeny);
+            }
+
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            szam1.Visible = true;
+            szam2.Visible = true;
+
+            if (a_keresendo.Checked == true)
+            {
+                b_label.Text = "b";
+                c_label.Text = "c";
+                b_label.Visible = true;
+                c_label.Visible = true;
+
+            }
+
+            if (b_keresendo.Checked == true)
+            {
+
+                b_label.Text = "a";
+                c_label.Text="c";
+                b_label.Visible = true;
+                c_label.Visible = true;
+
+            }
+
+            if (c_keresendo.Checked == true)
+            {
+
+                b_label.Text = "a";
+                c_label.Text = "b";
+                b_label.Visible = true;
+                c_label.Visible = true;
+
+            }
+
+        }
+
+        private async void button3_Click(object sender, EventArgs e)
+        {
+            int szam1_value = int.Parse(szam1.Text);
+            int szam2_value = int.Parse(szam2.Text);
+
+            if(c_keresendo.Checked == true)
+            {
+                double szamolas = (szam1_value * szam1_value) + (szam2_value * szam2_value);
+                double eredmeny1 = Math.Sqrt(szamolas);
+
+                var eredmeny = new { eredmeny = eredmeny1 };
+                await adatbazis.Child("Matek").Child("tergeometria").Child("masodikf").PutAsync(eredmeny);
+
+            }
+            
+        }
+    }
+}
