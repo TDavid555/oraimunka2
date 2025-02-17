@@ -1,0 +1,314 @@
+konzolos alkalmazás ami firebase adatb-ban tarolja: pythonnal kapcsolatos kérdések (10)
+a,b,c,d kozul valaszthat a felhaszn, minden jo valasz 1 pont
+taroljuk minden kerdesnek a kiertekeleset
+a kapott valaszt is tárolni
+10 kérdés után kiértékelést készít, %-os kifejezesben is
++erdemjegy: 
+40-50 - 2
+51-70 - 3
+70-80 - 4
+81-   - 5
+
+1.Mi a helyes szintaxis a „Hello World” kiíráshoz Pythonban?
+-echo("Hello World");
+p("Hello World")
+echo "Hello World"
+print("Hello World")
+
+
+2.Hogyan illeszthet be MEGJEGYZÉSeket a Python kódba?
+-#abc
+/*abc*/
+//abc
+<!--abc-->
+
+
+3.Melyik NEM törvényes változónév?
+Myvar
+my_var
+-my-var
+_myvar
+
+4.Hogyan lehet 5-ös számértékű változót létrehozni?
+-x = 5
+5 = x
+mind helyes
+x = str(5)
+
+
+5.Mi a helyes fájlkiterjesztés a Python-fájlokhoz?
+.pt
+.pyt
+-.py
+.pyth
+
+
+6.Mi a helyes módja a függvény létrehozásának Pythonban?
+create myFunction
+create myFunction():
+-def myFunction():
+function myFunction():
+
+
+7.Melyik módszerrel lehet nagybetűvel visszaadni egy karakterláncot?
+upperCase()
+-upper()
+toUpperCase()
+uppercase()
+
+8.Melyik operátort használjuk a számok szorzására?
+x
+%
+#
+-*
+
+
+9.Hogyan kezdj el egy while ciklust írni Pythonban?
+while (x > y)
+while x > y {
+x > y while {
+-while x > y:
+
+
+10.Melyik utasítást használják a ciklus leállítására?
+-break
+stop
+exit
+return
+
+
+
+
+
+
+
+import firebase_admin
+from firebase_admin import credentials, db
+
+# Firebase inicializálása
+cred = credentials.Certificate("python1-d9add-firebase-adminsdk-fbsvc-8d917026f2.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL': 'https://python1-d9add-default-rtdb.firebaseio.com/'
+})
+
+# Gyűjtemény neve
+COLLECTION_NAME = "kerdesek"
+
+# CREATE
+def create_kerdes(szam, kerdes):
+    ref = db.reference(f"/{COLLECTION_NAME}/{szam}")
+    ref.set({
+        "kerdes": kerdes,
+        "valasz": ""
+    })
+
+# UPDATE - valaszok mentese
+def store_answer(szam, valasz):
+    ref = db.reference(f"/{COLLECTION_NAME}/{szam}/valasz")
+    ref.set(valasz)
+
+# READ - Egy adott kérdés lekérése
+def get_kerdes(szam):
+    ref = db.reference(f"/{COLLECTION_NAME}/{szam}")
+    user = ref.get()
+    if user:
+        print(user)
+    else:
+        print("Kérdés nem található.")
+
+pontszam = 0
+
+if __name__ == "__main__":
+    # Kérdések feltöltése ha még nincs
+    create_kerdes(1, "Mi a helyes szintaxis a „Hello World” kiíráshoz Pythonban?")
+    create_kerdes(2, "Hogyan illeszthet be MEGJEGYZÉSeket a Python kódba?")
+    create_kerdes(3, "Melyik NEM törvényes változónév?")
+    create_kerdes(4, "Hogyan lehet 5-ös számértékű változót létrehozni?")
+    create_kerdes(5, "Mi a helyes fájlkiterjesztés a Python-fájlokhoz?")
+    create_kerdes(6, "Mi a helyes módja a függvény létrehozásának Pythonban?")
+    create_kerdes(7, "Melyik módszerrel lehet nagybetűvel visszaadni egy karakterláncot?")
+    create_kerdes(8, "Melyik operátort használjuk a számok szorzására?")
+    create_kerdes(9, "Hogyan kezdj el egy while ciklust írni Pythonban?")
+    create_kerdes(10, "Melyik utasítást használják a ciklus leállítására?")
+
+    for x in range(1, 11):
+        print(f"{x}. Kérdés:")
+        get_kerdes(x)
+
+        if x == 1:
+            print("a: echo(`Hello World`)")
+            print("b: p(`Hello World`)")
+            print("c: echo `Hello World`")
+            print("d: print(`Hello World`)")
+            helyes = "d"
+
+        elif x == 2:
+            print("a: #abc")
+            print("b: /*abc*/")
+            print("c: //abc")
+            print("d: <!--abc-->")
+            helyes = "a"
+
+        elif x == 3:
+            print("a: Myvar")
+            print("b: my_var")
+            print("c: my-var")
+            print("d: _myvar")
+            helyes = "c"
+
+        elif x == 4:
+            print("a: x = 5")
+            print("b: 5 = x")
+            print("c: mind helyes")
+            print("d: x = str(5)")
+            helyes = "a"
+
+        elif x == 5:
+            print("a: .pt")
+            print("b: .pyt")
+            print("c: .py")
+            print("d: .pyth")
+            helyes = "c"
+
+        elif x == 6:
+            print("a: create myFunction")
+            print("b: create myFunction():")
+            print("c: def myFunction():")
+            print("d: function myFunction():")
+            helyes = "c"
+
+        elif x == 7:
+            print("a: upperCase()")
+            print("b: upper()")
+            print("c: toUpperCase()")
+            print("d: uppercase()")
+            helyes = "b"
+
+        elif x == 8:
+            print("a: x")
+            print("b: %")
+            print("c: #")
+            print("d: *")
+            helyes = "d"
+
+        elif x == 9:
+            print("a: while (x > y)")
+            print("b: while x > y {")
+            print("c: x > y while {")
+            print("d: while x > y:")
+            helyes = "d"
+
+        elif x == 10:
+            print("a: break")
+            print("b: stop")
+            print("c: exit")
+            print("d: return")
+            helyes = "a"
+
+        valasz = input("Válaszod: ")
+        store_answer(x, valasz)
+
+        if valasz == helyes:
+            pontszam += 1
+
+print()
+
+szazalek = pontszam * 10
+print("Eredményed:", szazalek, "%")
+
+if szazalek < 40:
+    print("Elégtelen")
+elif szazalek > 39 and szazalek < 51:
+    print("Elégséges")
+elif szazalek > 50 and szazalek < 71:
+    print("Közepes")
+elif szazalek > 70 and szazalek < 81:
+    print("Jó")
+else:
+    print("Jeles")
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+
+
+
+
+import unittest
+from fuggvenyek import Muveletek
+
+class TestMuveletek(unittest.TestCase):
+    def setUp(self):
+        self.math = Muveletek()
+
+    def test_add(self):
+        self.assertEqual(self.math.add(2,3),5)
+        self.assertEqual(self.math.add(-1,1),0)
+
+    def test_substact(self):
+        self.assertEqual(self.math.substract(5,3),2)
+        self.assertEqual(self.math.substract(0,5),-5)
+
+    def test_multiply(self):
+        self.assertEqual(self.math.multiply(4,3),12)
+        self.assertEqual(self.math.multiply(-1,3),-3)
+
+    def test_divide(self):
+        self.assertEqual(self.math.divide(10,2),5)
+        with self.assertRaises(ValueError):
+            self.math.divide(10,0)
+
+if __name__ == "__main__":
+    unittest.main()
+    
