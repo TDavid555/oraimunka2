@@ -1,0 +1,107 @@
+txt-t olvas be min 1 oldalnyi szoveg
+beir szot van-e es hany db
+beir szot, megkeresi és kicsereli
+mentes maskent gomb: olvass be egy text-be,
+módosítsd és a gombra új txt készül
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace _0221
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+
+            String sor;
+
+            StreamReader sr = new StreamReader("szoveg.txt");
+            sor = sr.ReadLine();
+            while (sor != null)
+            {
+                sor.Split(' ');
+                textBox1.AppendText(sor);
+                sor = sr.ReadLine();
+            }
+            sr.Close();
+            
+            Console.ReadLine();
+        }
+
+        private void beolvas_Click(object sender, EventArgs e)
+        {
+            textBox1.Clear();
+
+            String sor;
+
+            StreamReader sr = new StreamReader("szoveg.txt");
+            sor = sr.ReadLine();
+            while (sor != null)
+            {
+                sor.Split(' ');
+                textBox1.AppendText(sor);
+                sor = sr.ReadLine();
+            }
+            sr.Close();
+
+            Console.ReadLine();
+        }
+
+        private void kereses_Click(object sender, EventArgs e)
+        {
+            int db = 0;
+            foreach (var s in textBox1.Text.Split(' '))
+            {
+                if (s == keresett.Text) db++;
+            }
+
+            if(db > 0)
+            {
+                darab.Text = db.ToString();
+                label2.Text = "Ennyiszer szerepel:";
+                label2.Visible = true;
+                darab.Visible = true;
+            }
+            else
+            {
+                darab.Visible = false;
+                label2.Text = "Egyszer sem szerepel";
+                label2.Visible = true;
+            }
+
+        }
+
+        private void mentesmaskent_Click(object sender, EventArgs e)
+        {
+            StreamWriter hely = new StreamWriter("modositott.txt");
+            hely.WriteLine(textBox1.Text);
+            hely.Flush();
+            hely.Close();
+
+        }
+
+        private void csere_Click(object sender, EventArgs e)
+        {
+            foreach (var s in textBox1.Text.Split(' '))
+            {
+                string ss = s.Replace(ezt.Text, erre.Text);
+
+
+            }
+
+            
+        }
+    }
+}
+
