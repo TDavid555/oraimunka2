@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace _0224_2
+{
+    class Verem<T> where T : struct
+    {
+        List<T> elemek = new List<T>();
+
+        public void Push(T elem)
+        {
+            elemek.Add(elem);
+        }
+
+        public T Pop()
+        {
+            if (elemek.Count != 0)
+            {
+                T utolso = elemek[elemek.Count - 1];
+                elemek.RemoveAt(elemek.Count - 1);
+                return utolso;
+            }
+            else
+            {
+                throw new InvalidOperationException("A verem üres!");
+            }
+        }
+
+        public T Peek()
+        {
+            if (elemek.Count != 0)
+            {
+                return (T.Join(", ", elemek));
+            }
+       
+            throw new InvalidOperationException("A verem üres!");
+            
+        }
+
+        public void Count()
+        {
+            Console.WriteLine(elemek.Count);
+        }
+
+        public bool IsEmpty()
+        {
+            if (elemek.Count() == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Verem<int> szamok = new Verem<int>();
+
+            Console.WriteLine(szamok.IsEmpty());
+
+            szamok.Push(5);
+            szamok.Push(4);
+            szamok.Push(2);
+            szamok.Push(1);
+            szamok.Push(3);
+
+            szamok.Pop();
+            szamok.Peek();
+            szamok.Count();
+
+            Console.WriteLine(szamok.IsEmpty());
+
+
+
+            Console.ReadKey();
+        }
+    }
+}
