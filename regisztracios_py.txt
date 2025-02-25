@@ -21,58 +21,70 @@ ezek a játékot(egesz szam)
 
 
 
-
-
-
-
 print("Regisztráció")
 print()
 
-regisztraltak = {}
 
-email = input("Email: ")
-jelszo = input("Jelszó: ")
+email = ""
+jelszo = ""
 emailok = False
 nagybetuok = False
 szamok = False
 nyolc = False
 jelszook = False
 
-while emailok == False and jelszook == False:
-    if (email.__contains__('@') and email.__contains__('.')):
+while emailok == False or jelszook == False:
+    emailbeker = input("Email: ")
+    jelszobeker = input("Jelszó: ")
+    if (emailbeker.__contains__('@') and emailbeker.__contains__('.')):
         emailok = True
 
-    for x in jelszo:
+    for x in jelszobeker:
         if x.isupper():
             nagybetuok = True
             break
 
-    for x in jelszo:
+    for x in jelszobeker:
         if x.isdigit():
             szamok = True
             break
 
-    if len(jelszo)+1 >= 8:
+    if len(jelszobeker)+1 >= 8:
         nyolc = True
 
-    if nyolc == True and nagybetuok == True and szamok == True and jelszo.__contains__('#') or jelszo.__contains__('!') or jelszo.__contains__('$') or jelszo.__contains__('&') or jelszo.__contains__('*') and jelszo.__contains__() :
+    if nyolc == True and nagybetuok == True and szamok == True and jelszobeker.__contains__('#') or jelszobeker.__contains__('!') or jelszobeker.__contains__('$') or jelszobeker.__contains__('&') or jelszobeker.__contains__('*') and jelszobeker.__contains__() :
         jelszook = True
+        
+    if emailok and jelszook:
+        email = emailbeker
+        jelszo = jelszobeker
 
+
+
+helyes = False
 
 if emailok and jelszook:
-    regisztraltak[email] = jelszo
+    print()
     print("Bejelentkezés")
     print()
 
-    emailbe = input("Email: ")
-    jelszobe = input("Jelszó: ")
+    while helyes == False:
+        emailbe = input("Email: ")
+        jelszobe = input("Jelszó: ")
+
+        if(emailbe == email and jelszobe == jelszo):
+            helyes = True
+            print("Sikeres bejelentkezés")
+        else:
+            print("Email vagy jelszó helytelen")
+
+    
 
     
 
 
 
 PS C:\python\python\0225> & "C:/Users/Tivadar Dávi 12/AppData/Local/Programs/Python/Python313/python.exe" c:/python/python/0225/weboldal.py
-
 
 
 
