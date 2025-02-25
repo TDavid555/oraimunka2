@@ -1,0 +1,82 @@
+alkalmazás ami statikusan tárol, regisztracio
+gamer weboldal
+
+1. regisztracio: email, pw
+min. 8 és tartalmazia kell min 1 nagybetű és
+spec karaktereket is (csak #!$&*), min 1 szam
+
+2. bejelentkezes, kivetelkezeles
+tárolni kell
+adatszerkezet ami nem tamogatja a duplikaciot
+tárolja: játéknevek és hozzátatozó lista
+10 pc játékot tárolunk (listával együtt)
+
+3. a felhasználótól bekérünk egy játék nevet
+megtalálható-e?
+átlagosan milyen listaárral rendelkeznek
+ezek a játékot(egesz szam)
+
+4. melyik a legdrágább és a legolcsóbb
+
+
+
+
+
+
+
+
+print("Regisztráció")
+print()
+
+regisztraltak = {}
+
+email = input("Email: ")
+jelszo = input("Jelszó: ")
+emailok = False
+nagybetuok = False
+szamok = False
+nyolc = False
+jelszook = False
+
+while emailok == False and jelszook == False:
+    if (email.__contains__('@') and email.__contains__('.')):
+        emailok = True
+
+    for x in jelszo:
+        if x.isupper():
+            nagybetuok = True
+            break
+
+    for x in jelszo:
+        if x.isdigit():
+            szamok = True
+            break
+
+    if len(jelszo)+1 >= 8:
+        nyolc = True
+
+    if nyolc == True and nagybetuok == True and szamok == True and jelszo.__contains__('#') or jelszo.__contains__('!') or jelszo.__contains__('$') or jelszo.__contains__('&') or jelszo.__contains__('*') and jelszo.__contains__() :
+        jelszook = True
+
+
+if emailok and jelszook:
+    regisztraltak[email] = jelszo
+    print("Bejelentkezés")
+    print()
+
+    emailbe = input("Email: ")
+    jelszobe = input("Jelszó: ")
+
+    
+
+
+
+PS C:\python\python\0225> & "C:/Users/Tivadar Dávi 12/AppData/Local/Programs/Python/Python313/python.exe" c:/python/python/0225/weboldal.py
+
+
+
+
+
+
+
+
