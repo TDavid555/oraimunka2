@@ -20,13 +20,9 @@ ezek a játékot(egesz szam)
 
 
 
-
 print("Regisztráció")
 print()
 
-
-email = ""
-jelszo = ""
 emailok = False
 nagybetuok = False
 szamok = False
@@ -36,47 +32,72 @@ jelszook = False
 while emailok == False or jelszook == False:
     emailbeker = input("Email: ")
     jelszobeker = input("Jelszó: ")
-    if (emailbeker.__contains__('@') and emailbeker.__contains__('.')):
+    if ("@" in emailbeker and "." in emailbeker):
         emailok = True
 
-    for x in jelszobeker:
-        if x.isupper():
-            nagybetuok = True
-            break
-
-    for x in jelszobeker:
-        if x.isdigit():
-            szamok = True
-            break
-
-    if len(jelszobeker)+1 >= 8:
-        nyolc = True
-
-    if nyolc == True and nagybetuok == True and szamok == True and jelszobeker.__contains__('#') or jelszobeker.__contains__('!') or jelszobeker.__contains__('$') or jelszobeker.__contains__('&') or jelszobeker.__contains__('*') and jelszobeker.__contains__() :
+    nagybetuok = any(x.isupper() for x in jelszobeker)
+    szamok = any(x.isdigit() for x in jelszobeker)
+    nyolc = len(jelszobeker) >= 8
+    spec_karakter = any(c in jelszobeker for c in "#!$&*")
+    
+    if nyolc and nagybetuok and szamok and spec_karakter:
         jelszook = True
-        
+    
     if emailok and jelszook:
         email = emailbeker
         jelszo = jelszobeker
+        break
 
-
-
-helyes = False
-
-if emailok and jelszook:
-    print()
-    print("Bejelentkezés")
-    print()
-
-    while helyes == False:
+def bejelentkezes(email, jelszo):
+    print("\nBejelentkezés\n")
+    while True:
         emailbe = input("Email: ")
         jelszobe = input("Jelszó: ")
-
-        if(emailbe == email and jelszobe == jelszo):
-            helyes = True
+        if emailbe == email and jelszobe == jelszo:
             print("Sikeres bejelentkezés")
+            return True
         else:
             print("Email vagy jelszó helytelen")
+
+jatekok = {
+    "Cyberpunk 2077": 60,
+    "The Witcher 3": 40,
+    "Elden Ring": 70,
+    "GTA V": 30,
+    "Red Dead Redemption 2": 50,
+    "Minecraft": 25,
+    "Doom Eternal": 50,
+    "Horizon Zero Dawn": 45,
+    "God of War": 60,
+    "Assassin's Creed Valhalla": 70
+}
+
+def jatek_kereses():
+    jatek_nev = input("Melyik játékot keresed? ")
+    return jatekok.get(jatek_nev, None)
+
+def atlag_ar():
+    
+
+def legolcsobb_jatek():
+    
+
+def legdragabb_jatek():
+    
+
+#futtatas
+if bejelentkezes(email, jelszo):
+    keresett_ar = jatek_kereses()
+    if keresett_ar is not None:
+        print(f"A keresett játék ára: {keresett_ar}$")
+    else:
+        print("Ez a játék nem található az adatbázisban.")
+    
+    print(f"Az összes játék átlagos ára: {atlag_ar()}$")
+    legolcsobb = legolcsobb_jatek()
+    print(f"A legolcsóbb játék: {legolcsobb[0]}, ára: {legolcsobb[1]}$")
+    legdragabb = legdragabb_jatek()
+    print(f"A legdrágább játék: {legdragabb[0]}, ára: {legdragabb[1]}$")
 
     
 
