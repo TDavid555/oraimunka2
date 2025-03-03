@@ -10,7 +10,7 @@ namespace _0224_2
     class Verem<T> where T : struct
     {
         List<T> elemek = new List<T>();
-
+        
         public void Push(T elem)
         {
             elemek.Add(elem);
@@ -18,46 +18,30 @@ namespace _0224_2
 
         public T Pop()
         {
-            if (elemek.Count != 0)
-            {
-                T utolso = elemek[elemek.Count - 1];
-                elemek.RemoveAt(elemek.Count - 1);
-                return utolso;
-            }
-            else
-            {
+            if (IsEmpty)
                 throw new InvalidOperationException("A verem üres!");
-            }
+            T utolso = elemek[count - 1];
+            elemek.RemoveAt(count - 1);
+            return utolso;
         }
 
         public T Peek()
         {
-            if (elemek.Count != 0)
-            {
-                return (T.Join(", ", elemek));
-            }
-       
-            throw new InvalidOperationException("A verem üres!");
-            
+            if (IsEmpty)
+                throw new InvalidOperationException("A verem üres!");
+            return elemek[elemek.Count-1];
+
         }
 
-        public void Count()
+        public int count => elemek.Count;
+        public bool IsEmpty => elemek.Count == 0;
+
+
+        public void Kiírat()
         {
-            Console.WriteLine(elemek.Count);
+            elemek.Reverse();
+            Console.WriteLine("Verem tartalma: " + string.Join(", ", elemek));
         }
-
-        public bool IsEmpty()
-        {
-            if (elemek.Count() == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
 
     }
 
@@ -67,8 +51,6 @@ namespace _0224_2
         {
             Verem<int> szamok = new Verem<int>();
 
-            Console.WriteLine(szamok.IsEmpty());
-
             szamok.Push(5);
             szamok.Push(4);
             szamok.Push(2);
@@ -77,10 +59,8 @@ namespace _0224_2
 
             szamok.Pop();
             szamok.Peek();
-            szamok.Count();
 
-            Console.WriteLine(szamok.IsEmpty());
-
+            szamok.Kiírat();
 
 
             Console.ReadKey();
