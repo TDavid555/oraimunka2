@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _0317_2
+{
+    class Bank<T> where T : struct, IComparable<T>
+    {
+        private List<T> befizetesek = new List<T>();
+        private T egyenleg;
+        private T maxKifizetes;
+
+        public Bank(T maxKifizetes)
+        {
+            this.egyenleg = default(T);
+            this.maxKifizetes = maxKifizetes;
+        }
+
+        public void Befizet(T osszeg)
+        {
+            befizetesek.Add(osszeg);
+            egyenleg = (dynamic)egyenleg + (dynamic)osszeg;
+            Console.WriteLine($"Befizetve: {osszeg} Ft");
+        }
+
+        public void Kivesz(T osszeg)
+        {
+            
+        }
+
+        public void Egyenleg()
+        {
+            Console.WriteLine($"Jelenlegi egyenleg: {egyenleg} Ft");
+        }
+
+        public void Nullazo()
+        {
+            egyenleg = default(T);
+            befizetesek.Clear();
+            Console.WriteLine("Az egyenleg lenullázva!");
+        }
+    }
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Bank<double> szamla = new Bank<double>(50000);
+
+            szamla.Befizet(7000);
+            szamla.Befizet(5000);
+            szamla.Befizet(2000);
+            szamla.Egyenleg();
+
+            szamla.Kivesz(2000);
+            szamla.Egyenleg();
+
+            szamla.Kivesz(60000);
+
+            szamla.Nullazo();
+            szamla.Egyenleg();
+
+            Console.ReadKey();
+        }
+    }
+}
