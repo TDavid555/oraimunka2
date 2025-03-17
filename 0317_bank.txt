@@ -1,0 +1,97 @@
+egy generikus osztaly ami a b banki szferaban fogja megoldani
+listaban tarolva a befizeteseit
+befize fuggveny amivel befizet
+kivesz
+egyenleg (lekeres)
+nullazo (lenullazza a szamlat)
+figyelmezteto: ha az egyenleg kivételnél többet akar kivenni mint 50ezer, figyelmeztet
+(túllépted a kifizetési limitet, ne is engedje)
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _0317
+{
+    public class Bank<T>
+    {
+        private List<T> befizetesek = new List<T>();
+        private List<double> befizetesek2 = new List<double>();
+        //public double egyenleg;
+        public void Befizet(T osszeg)
+        {
+            befizetesek.Add(osszeg);  
+
+            foreach (T t in befizetesek)
+            {
+                befizetesek2.Add(double.Parse(t.ToString()));
+            }
+
+
+            
+
+
+        }
+
+        public void Kivesz(T osszeg)
+        {
+            foreach (double t in befizetesek2)
+            {
+                //Console.WriteLine(t);                   
+                
+            }
+
+            for (double i = 3;i< befizetesek2.Count; i++)
+            {
+                double egyenleg = befizetesek2[i];
+            }
+
+
+
+        }
+
+
+    }
+
+    
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //egy generikus osztaly ami a banki szferaban fogja megoldani
+            //listaban tarolva a befizeteseit
+            //befizet fuggveny amivel befizet
+            //kivesz
+            //egyenleg (lekeres)
+            //nullazo (lenullazza a szamlat)
+            //figyelmezteto: ha az egyenleg kivételnél többet akar kivenni mint 50ezer, figyelmeztet
+            //(túllépted a kifizetési limitet, ne is engedje)
+
+
+
+            Bank<double> befizetesek = new Bank<double>();
+
+            befizetesek.Befizet(7000);
+            befizetesek.Befizet(5000);
+            befizetesek.Befizet(2000);
+
+            befizetesek.Kivesz(2000);
+
+
+            Console.ReadKey();
+        }
+    }
+}
+
+
+
+
+
+
+
