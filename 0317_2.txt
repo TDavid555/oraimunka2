@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,24 +11,44 @@ namespace _0317_2
     {
         private List<T> befizetesek = new List<T>();
         private T egyenleg;
-        private T maxKifizetes;
+        private T maxKifizet;
 
-        public Bank(T maxKifizetes)
+        public Bank()
         {
             this.egyenleg = default(T);
-            this.maxKifizetes = maxKifizetes;
         }
 
         public void Befizet(T osszeg)
         {
             befizetesek.Add(osszeg);
-            egyenleg = (dynamic)egyenleg + (dynamic)osszeg;
+            egyenleg = (dynamic)egyenleg + osszeg;
             Console.WriteLine($"Befizetve: {osszeg} Ft");
         }
 
-        public void Kivesz(T osszeg)
+
+
+        public void Kivesz(T osszeg, T limit)
         {
-            
+            bool osszeg_nagyobb = false;
+            if(osszeg > (dynamic)limit)
+            {
+                Console.WriteLine("Túllépted a limitet!");
+                osszeg_nagyobb = true;
+            }
+
+            if(osszeg_nagyobb == false)
+            {
+                if ((dynamic)egyenleg >= (dynamic)osszeg)
+                {
+                    egyenleg = (dynamic)egyenleg - (dynamic)osszeg;
+                    Console.WriteLine($"Kivett: {osszeg} Ft");
+                }
+                else
+                {
+                    Console.WriteLine($"Nincs ekkora összeg a számládon! Egyenleged: {egyenleg} Ft");
+                }
+            }
+              
         }
 
         public void Egyenleg()
@@ -46,20 +67,73 @@ namespace _0317_2
     {
         static void Main(string[] args)
         {
-            Bank<double> szamla = new Bank<double>(50000);
+            double limit = 50000;
+            Bank<double> szamla = new Bank<double>();
 
-            szamla.Befizet(7000);
-            szamla.Befizet(5000);
-            szamla.Befizet(2000);
-            szamla.Egyenleg();
+            string valasztott = "";
 
-            szamla.Kivesz(2000);
-            szamla.Egyenleg();
+            while (valasztott != "5")
+            {
+                Console.WriteLine();
+                Console.WriteLine("Mit szeretnél csinálni?");
+                Console.WriteLine("1. Befizetés");
+                Console.WriteLine("2. Kp. felvétel");
+                Console.WriteLine("3. Egyenleg nullázása");
+                Console.WriteLine("4. Limitmódosítás");
+                Console.WriteLine("5. Kilépés");
+                string valasztas = Console.ReadLine();
 
-            szamla.Kivesz(60000);
+                
+                valasztott = valasztas;
 
-            szamla.Nullazo();
-            szamla.Egyenleg();
+
+                if (valasztas == "1" || valasztas == "2" || valasztas == "3" || valasztas == "4" || valasztas == "5")
+                {
+                    if (valasztas == "1")
+                    {
+                        Console.WriteLine("Összeg: ");
+                        int osszeg = int.Parse(Console.ReadLine());
+                        szamla.Befizet(osszeg);
+                        szamla.Egyenleg();
+                    }
+
+                    if (valasztas == "2")
+                    {
+                        Console.WriteLine("Összeg: ");
+                        int osszeg = int.Parse(Console.ReadLine());
+                        szamla.Kivesz(osszeg, limit);
+                        szamla.Egyenleg();
+                    }
+
+                    if (valasztas == "3")
+                    {
+                        szamla.Nullazo();
+                        szamla.Egyenleg();
+                    }
+
+                    if (valasztas == "4")
+                    {
+                        Console.WriteLine("Új limit: ");
+                        int uj_limit = int.Parse(Console.ReadLine());
+                        limit = uj_limit;
+                    }
+
+                    if (valasztas == "5")
+                    {
+                        return;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Ilyen lehetőség nincs!");
+                }
+
+
+
+
+
+            }
 
             Console.ReadKey();
         }
