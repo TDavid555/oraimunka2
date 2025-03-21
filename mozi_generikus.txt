@@ -1,0 +1,104 @@
+mozijegykezelőrendszer
+Tárolni a film címét, kezdés idejét (kedd, 10:10), jegy ára
+Min 10 példány
+
+Megkap parameterkent egy osszeget (int)
+mennyi volt a napi latogatok szama? osszeg/jegyar
+
+Átlagosan milyen árral rendelkeznek ezek a filmek?
+
+Hány film kezdődött ugyanazon a napon?
+csak napot kell vizsgálni
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _0321
+{
+    class Mozi<T>
+    {
+        private List<T> cimek = new List<T>();
+        private List<T> kezdesek = new List<T>();
+        private List<T> jegyarak = new List<T>();
+
+
+        public void Hozzaad(T cim, T kezdes, T jegyar)
+        {
+            cimek.Add(cim);
+            kezdesek.Add(kezdes);
+            jegyarak.Add(jegyar);
+        }
+
+        public int Napilatogatok(string nap, int osszeg)
+        {
+            int jegyar;
+            foreach (T k in kezdesek)
+            {
+                if((dynamic)k == "nap")
+                {
+                    int i = kezdesek.IndexOf(k);
+                    jegyar = (dynamic)jegyarak[i];
+                    break;
+                }
+            }
+
+            return osszeg / jegyar;
+        }
+
+        int osszes;
+        public int Atlagar()
+        {
+            osszes = 0;
+            
+            foreach (T j in jegyarak)
+            {
+                osszes = int.Parse((dynamic)j) + osszes;
+            }
+            return osszes/jegyarak.Count;
+        }
+
+
+
+
+    }
+
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Mozi<string> mozi = new Mozi<string> { };
+
+            mozi.Hozzaad("Amerika Kapitány", "Kedd, 9:30", "2500");
+            mozi.Hozzaad("Elektronikus állam", "Hétfő, 9:40", "2400");
+            mozi.Hozzaad("A szurdok", "Csütörtök, 9:50", "2450");
+            mozi.Hozzaad("A te hibád", "Szerda, 10:00", "2550");
+            mozi.Hozzaad("Futni mentem", "Szombat, 8:10", "2600");
+            mozi.Hozzaad("A remény rabjai", "Péntek, 10:20", "2650");
+            mozi.Hozzaad("Nagymenők", "Vasárnap, 10:30", "2700");
+            mozi.Hozzaad("Életrevalók", "Szombat, 12:40", "2600");
+            mozi.Hozzaad("Eredet", "Hétfő, 10:50", "2400");
+            mozi.Hozzaad("Vissza a jövőbe", "Kedd, 11:00", "2500");
+
+
+
+            Console.WriteLine($"Jegyek árainak átlaga: {mozi.Atlagar()}");
+
+
+
+            Console.ReadKey();
+        }
+    }
+}
+
+
+
+
+
