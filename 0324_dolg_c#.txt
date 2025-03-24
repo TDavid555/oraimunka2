@@ -1,0 +1,366 @@
+Saját op rendszer
+Menürendszer:
+	beléptető rendszer
+Ha belépett:
+	mappák vannak(tárolók)
+	fájlokat tud létrehozni (txt, kep, pdf)
+	törölni és módosítani is tudja
+	
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TD_dolg
+{
+    public class OS<T>
+    {
+        private List<T> mappak = new List<T>();
+        private List<T> erettsegi_tetelek = new List<T>();
+        private List<T> kepek = new List<T>();
+        private List<T> szovegek = new List<T>();
+        private List <T> parancsok = new List<T>();
+
+        private string mappa;
+
+        // mappa hozzáadása metódus
+        public void AddMappa(T mappanev)
+        {
+            mappak.Add(mappanev);
+        }
+
+        // parancs hozzáadása metódus
+        public void AddParancs(T parancs)
+        {
+            parancsok.Add(parancs);
+        }
+
+        // érettségi tétel hozzáadása metódus
+        public void AddErettsegi(T erettsegi)
+        {
+            erettsegi_tetelek.Add(erettsegi);
+        }
+
+        // kép hozzáadása metódus
+        public void AddKep(T kep)
+        {
+            kepek.Add(kep);
+        }
+
+        // szöveg hozzáadása metódus
+        public void AddSzoveg(T szoveg)
+        {
+            szovegek.Add(szoveg);
+        }
+
+        // mappákat kiíró metódus
+        public void Mappak()
+        {
+            Console.WriteLine("Mappák:\n");
+            foreach (T m in mappak)
+            {
+                Console.WriteLine(m.ToString());
+            }
+        }
+
+        // a felhasználó által választott mappa nevének elmentése
+        public void MappaValasztas(string valasztott)
+        { 
+
+            bool vanilyen = false;
+            foreach (T t in mappak)
+            {
+                if ((dynamic)t == valasztott)
+                {
+                    vanilyen = true;
+                }
+            }
+            if(vanilyen)
+            {
+                Console.WriteLine($"Sikeresen megnyitottad a {valasztott} mappát");
+                mappa = valasztott;
+            }
+            else
+            {
+                Console.WriteLine("Ilyen mappa nem létezik");
+            }
+        }
+
+        // parancsokat kiíró metódus
+        public void Parancsok()
+        {
+            Console.WriteLine("Az alábbi parancsok közül választhatsz: ");
+            foreach (T p in parancsok)
+            {
+                Console.WriteLine(p.ToString());
+            }
+        }
+
+        // fájlokat létrehozó metódus
+        public void Letrehoz()
+        {
+            Console.WriteLine("Mi legyen a fájl neve?");
+            string neve = Console.ReadLine();
+            if (mappa == "Érettségi tételek")
+            {
+                erettsegi_tetelek.Add((dynamic)neve+".pdf");
+                Console.WriteLine($"Sikeresen létrejött a {neve}.pdf"); 
+            }
+            if (mappa == "Képek")
+            {
+                kepek.Add((dynamic)neve + ".png");
+                Console.WriteLine($"Sikeresen létrejött a {neve}.png");
+            }
+
+            // ha a fájl egy txt, meg lehet adni a tartalmát is
+            if (mappa == "Szövegek")
+            {
+                Console.WriteLine("Mi legyen a tartalma?");
+                string szovege = Console.ReadLine();
+                szovegek.Add((dynamic)neve + ".txt");
+                Console.WriteLine($"Sikeresen létrejött a {neve}.txt");
+                StreamWriter sw_szoveg = new StreamWriter($"{neve}.txt");
+                sw_szoveg.WriteLine(szovege);
+
+                sw_szoveg.Flush();
+                sw_szoveg.Close();
+            }
+
+        }
+
+        // fájlokat törlő metódus
+        public void Torol(string torolni)
+        {
+            if (mappa == "Érettségi tételek")
+            {
+                foreach(T e in erettsegi_tetelek)
+                {
+                    if((dynamic)e == torolni)
+                    {
+                        erettsegi_tetelek.Remove(e);
+                    }
+                }
+            }
+            if (mappa == "Képek")
+            {
+                foreach (T k in kepek)
+                {
+                    if ((dynamic)k == torolni)
+                    {
+                        kepek.Remove(k);
+                    }
+                }
+            }
+            if (mappa == "Szövegek")
+            {
+                foreach (T s in szovegek)
+                {
+                    if ((dynamic)s == torolni)
+                    {
+                        szovegek.Remove(s);
+                    }
+                }
+            }
+        }
+
+        // txt fájlok tartalmát módosító metódus
+        public void Modosit(string modositani)
+        {
+            Console.WriteLine("Ez a szöveges fájl tartalma:");
+            foreach (T s in szovegek)
+            {
+                if ((dynamic)s == modositani){
+                    StreamReader sr = new StreamReader($"{modositani}");
+                    List<string> szoveg = new List<string>();
+                    while (!sr.EndOfStream)
+                    {
+                        szoveg.Add(sr.ReadLine());
+                    }
+                    foreach (string item in szoveg)
+                    {
+                        Console.WriteLine(item);
+                    }
+                    sr.Close();
+                }
+            }
+            Console.WriteLine("Mi legyen az új szöveg?");
+            string ujszoveg = Console.ReadLine();
+            StreamWriter sw_szoveg = new StreamWriter($"{modositani}");
+            sw_szoveg.WriteLine(ujszoveg);
+
+            sw_szoveg.Flush();
+            sw_szoveg.Close();
+
+        }
+
+        // érettségi tételeket (pdf-eket) kiíró metódus 
+        public void Erettsegi_kiir()
+        {
+            foreach (T e in erettsegi_tetelek)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        // képeket (png-ket) kiíró metódus
+        public void Kep_kiir()
+        {
+            foreach (T k in kepek)
+            {
+                Console.WriteLine(k.ToString());
+            }
+        }
+
+        // szövegeket (txt-ket) kiíró metódus
+        public void Szoveg_kiir()
+        {
+            foreach (T s in szovegek)
+            {
+                Console.WriteLine(s.ToString());
+            }
+        }
+
+
+
+    }
+
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            OS<string> os = new OS<string>();
+
+            // mappák létrehozása
+            os.AddMappa("Érettségi tételek");
+            os.AddMappa("Képek");
+            os.AddMappa("Szövegek");
+
+            // parancsok létrehozása
+            os.AddParancs("letrehoz");
+            os.AddParancs("torol");
+            os.AddParancs("modosit");
+
+            // egy-egy fájl létrehozása a mappákban
+            os.AddErettsegi("magyar.pdf");
+            os.AddKep("macska.png");
+            os.AddSzoveg("almas_recept.txt");
+
+            
+            // belépés, felhasznév: user, jelszó: pwd
+            bool belepett = false;
+            Console.WriteLine("Be akarsz lépni? (y/n)");
+            string akare = Console.ReadLine();
+            if (akare == "y")
+            {
+                bool nev_ok = false;
+                bool jelszo_ok = false;
+                while(nev_ok == false && jelszo_ok == false)
+                {
+                    Console.WriteLine("Felhasználónév:");
+                    string nev = Console.ReadLine();
+                    if (nev == "user")
+                    {
+                        nev_ok = true;
+                    }
+
+                    Console.WriteLine("Jelszó:");
+                    string jelszo = Console.ReadLine();
+                    if (jelszo == "pwd")
+                    {
+                        jelszo_ok = true;
+                    }
+                }
+
+                Console.WriteLine("Sikeres belépés!\n");
+                belepett = true;
+
+            }
+            else
+            {
+                return;
+            }
+
+
+            while (belepett)
+            {
+                // a felhasználó mappát választhat
+                os.Mappak();
+                string mappavalasztas = Console.ReadLine();
+                os.MappaValasztas(mappavalasztas);
+                os.Parancsok();
+
+
+                // kiválasztja mit akar tenni a választott mappán belüli fájlokkal
+                // új fájl létrehozása
+                string parancsvalasztas = Console.ReadLine();
+                if(parancsvalasztas == "letrehoz")
+                {
+                    os.Letrehoz();
+                }
+
+                // választott fájl törlése
+                if (parancsvalasztas == "torol")
+                {
+                    Console.WriteLine("A mappa tartalma:");
+                    if(mappavalasztas == "Érettségi tételek")
+                    {
+                        os.Erettsegi_kiir();
+                    }
+                    if (mappavalasztas == "Képek")
+                    {
+                        os.Kep_kiir();
+                    }
+                    if (mappavalasztas == "Szövegek")
+                    {
+                        os.Szoveg_kiir();
+                    }
+
+                    Console.WriteLine("Válaszd ki melyiket akarod törölni");
+                    string torolni = Console.ReadLine();
+                    os.Torol(torolni);
+                }
+
+                // választott txt módosítása
+                if (parancsvalasztas == "modosit")
+                {
+                    Console.WriteLine("A mappa tartalma:");
+                    if (mappavalasztas == "Érettségi tételek")
+                    {
+                        Console.WriteLine("Ennek a mappának a tartalmát nem lehet módosítani!");
+                    }
+                    if (mappavalasztas == "Képek")
+                    {
+                        Console.WriteLine("Ennek a mappának a tartalmát nem lehet módosítani!");
+                    }
+                    if (mappavalasztas == "Szövegek")
+                    {
+                        
+                        Console.WriteLine("Válaszd ki melyiket akarod módosítani");
+                        os.Szoveg_kiir();
+                        string modositani = Console.ReadLine();
+                        os.Modosit(modositani);
+                    }
+
+                    
+                }
+
+                Console.WriteLine("Ki akarsz lépni? (y/n)");
+                string valasz = Console.ReadLine();
+                if (valasz == "y")
+                {
+                    belepett = false;
+                }
+
+            }
+
+            Console.ReadKey();
+        }
+    }
+}
