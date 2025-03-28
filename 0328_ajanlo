@@ -1,0 +1,41 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+
+
+namespace _0328_ajanlo
+{
+    internal class Program
+    {
+        private const string ConnectionString ="Server=localhost;Database=ajanlorendszer;Uid=root;Pwd=;";
+
+        static void Main(string[] args)
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                for (int i = 1; i <= 10; i++)
+                {
+                string query = "INSERT INTO szamok (szam)VALUES(@bekert)";
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+
+
+                        Console.WriteLine($"Kérem a(z) {i}. számot:");
+                        int bekert = int.Parse(Console.ReadLine());
+                        command.Parameters.AddWithValue("@bekert", bekert);
+
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
+        }
+    }
+}
