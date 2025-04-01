@@ -1,0 +1,132 @@
+Class1.cs:
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+
+namespace ajanlo
+{
+    public class Ajanlo
+    {
+        public const string ConnectionString = "Server=localhost;Database=ajanlorendszer;Uid=root;Pwd=;";
+        public string Leggyakoribb()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                string eredmeny = "";
+                connection.Open();
+                string query = "SELECT szam, COUNT(szam) as gyakorisag FROM szamok GROUP BY szam ORDER BY gyakorisag DESC LIMIT 1";
+                using (var command = new MySqlCommand(query, connection))
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        eredmeny = $"A leggyakoribb szám: {reader["szam"]}, Gyakoriság: {reader["gyakorisag"]}";
+                    }
+                }
+                return eredmeny;
+            }
+        }
+
+        public bool Feltolt(int szam)
+        {
+            bool feltoltve = false;
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                string query = "INSERT INTO szamok (szam)VALUES(@bekert)";
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@bekert", szam);
+                    command.ExecuteNonQuery();
+                    feltoltve = true;
+                }
+            }
+            return feltoltve;
+        }
+
+        public int Legkisebbszam()
+        {
+            using (var connection = new MySqlConnection(ConnectionString))
+            {
+                string eredmeny = "";
+                connection.Open();
+                string query = "SELECT MIN(szam) as legkis FROM szamok;";
+                using (var command = new MySqlCommand(query, connection))
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        eredmeny = $"{reader["legkis"]}";
+                    }
+                }
+                int legkisebb = int.Parse(eredmeny);
+                return legkisebb;
+            }
+
+
+        }
+
+    }
+}
+
+
+
+UnitTest1.cs:
+
+using NUnit.Framework;
+using ajanlo;
+using System.Security.Claims;
+using MySql.Data.MySqlClient;
+
+namespace ajanlo_teszt
+{
+    [TestFixture]
+    public class Tests
+    {        
+        Ajanlo ajanlo;
+        [SetUp]
+        public void Setup()
+        {
+            ajanlo = new Ajanlo();
+        }
+
+        [Test]
+        public void Test1()
+        {
+            Assert.IsTrue(ajanlo.Feltolt(15));
+        }
+
+        [Test]
+        public void Test2()
+        {
+            Assert.AreEqual(ajanlo.Leggyakoribb(), $"A leggyakoribb szám: 3, Gyakoriság: 13");
+        }
+
+        [Test]
+        public void Test3()
+        {
+            Assert.AreEqual(ajanlo.Legkisebbszam(), 1);
+        }
+
+        [Test]
+        public void Test4()
+        {
+            Assert.Greater(ajanlo.Legkisebbszam(), 0);
+        }
+
+        [Test]
+        public void Test5()
+        {
+            Assert.Less(ajanlo.Legkisebbszam(), 2);
+        }
+
+
+    }
+}
