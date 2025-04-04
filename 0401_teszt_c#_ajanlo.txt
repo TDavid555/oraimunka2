@@ -77,6 +77,8 @@ namespace ajanlo
 }
 
 
+================================================================================
+================================================================================
 
 UnitTest1.cs:
 
@@ -98,31 +100,31 @@ namespace ajanlo_teszt
         }
 
         [Test]
-        public void Test1()
+        public void Fel_lett_e_toltve()
         {
             Assert.IsTrue(ajanlo.Feltolt(15));
         }
 
         [Test]
-        public void Test2()
+        public void A_leggyakoribb_sza_es_a_gyakorisaga_egyezik()
         {
             Assert.AreEqual(ajanlo.Leggyakoribb(), $"A leggyakoribb szám: 3, Gyakoriság: 13");
         }
 
         [Test]
-        public void Test3()
+        public void A_legkisebb_szam_egyezik()
         {
             Assert.AreEqual(ajanlo.Legkisebbszam(), 1);
         }
 
         [Test]
-        public void Test4()
+        public void A_legkisebb_szam_nagyobb_mint_0()
         {
             Assert.Greater(ajanlo.Legkisebbszam(), 0);
         }
 
         [Test]
-        public void Test5()
+        public void A_legkisebb_szam_kisebb_mint_2()
         {
             Assert.Less(ajanlo.Legkisebbszam(), 2);
         }
