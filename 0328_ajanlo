@@ -12,45 +12,62 @@ namespace _0328_ajanlo
     internal class Program
     {
         private const string ConnectionString = "Server=localhost;Database=ajanlorendszer;Uid=root;Pwd=;";
-        static void Leggyakoribb()
+        static string Leggyakoribb()
         {
             using (var connection = new MySqlConnection(ConnectionString))
             {
+                string eredmeny = "";
                 connection.Open();
                 string query = "SELECT szam, COUNT(szam) as gyakorisag FROM szamok GROUP BY szam ORDER BY gyakorisag DESC LIMIT 1";
                 using (var command = new MySqlCommand(query, connection))
+                   
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine($"A leggyakoribb szám: {reader["szam"]}, Gyakoriság: { reader["gyakorisag"]}");
+                        eredmeny = $"A leggyakoribb szám: {reader["szam"]}, Gyakoriság: {reader["gyakorisag"]}";
                     }
                 }
+                return eredmeny;
             }
         }
 
         static void Main(string[] args)
         {
+            List<int> szamok_list = new List<int>();
+            for (int i = 1; i <= 10; i++)
+            {
+                Console.WriteLine($"Kérem a(z) {i}. számot (1-20): ");
+                Console.WriteLine("Csak az 1 és 20 közötti elemek kerülnek feltöltésre!");
+                int bekert = int.Parse(Console.ReadLine());
+                if(bekert > 0 && bekert <21)
+                {
+                    szamok_list.Add(bekert);
+                }
+            }
+
             using (var connection = new MySqlConnection(ConnectionString))
             {
                 connection.Open();
 
-                for (int i = 1; i <= 10; i++)
-                {
+                
                     string query = "INSERT INTO szamok (szam)VALUES(@bekert)";
+                for (int i = 0; i <= szamok_list.Count - 1; i++)
+                {
                     using (var command = new MySqlCommand(query, connection))
                     {
-
-                        Console.WriteLine($"Kérem a(z) {i}. számot:");
-                        int bekert = int.Parse(Console.ReadLine());
-                        command.Parameters.AddWithValue("@bekert", bekert);
+                        
+                        command.Parameters.AddWithValue("@bekert", szamok_list[i]);
 
                         command.ExecuteNonQuery();
                     }
+                        
+                        
                 }
+                
             }
 
-            Leggyakoribb();
+            Console.WriteLine(Leggyakoribb());
 
 
 
