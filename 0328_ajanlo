@@ -4,11 +4,92 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
 using MySql.Data.MySqlClient;
-
 
 namespace _0328_ajanlo
 {
+    public class egy
+    {
+        public int db = 0;
+    }
+    public class ketto
+    {
+        public int db = 0;
+    }
+    public class harom
+    {
+        public int db = 0;
+    }
+    public class negy
+    {
+        public int db = 0;
+    }
+    public class ot
+    {
+        public int db = 0;
+    }
+    public class hat
+    {
+        public int db = 0;
+    }
+    public class het
+    {
+        public int db = 0;
+    }
+    public class nyolc
+    {
+        public int db = 0;
+    }
+    public class kilenc
+    {
+        public int db = 0;
+    }
+    public class tiz
+    {
+        public int db = 0;
+    }
+    public class tizenegy
+    {
+        public int db = 0;
+    }
+    public class tizenketto
+    {
+        public int db = 0;
+    }
+    public class tizenharom
+    {
+        public int db = 0;
+    }
+    public class tizennegy
+    {
+        public int db = 0;
+    }
+    public class tizenot
+    {
+        public int db = 0;
+    }
+    public class tizenhat
+    {
+        public int db = 0;
+    }
+    public class tizenhet
+    {
+        public int db = 0;
+    }
+    public class tizennyolc
+    {
+        public int db = 0;
+    }
+    public class tizenkilenc
+    {
+        public int db = 0;
+    }
+    public class husz
+    {
+        public int db = 0;
+    }
+
     internal class Program
     {
         private const string ConnectionString = "Server=localhost;Database=ajanlorendszer;Uid=root;Pwd=;";
@@ -34,6 +115,27 @@ namespace _0328_ajanlo
 
         static void Main(string[] args)
         {
+            egy egy = new egy();
+            ketto ketto = new ketto();
+            harom harom = new harom();
+            negy negy = new negy();
+            ot ot = new ot();
+            hat hat = new hat();
+            het het = new het();
+            nyolc nyolc = new nyolc();
+            kilenc kilenc= new kilenc();
+            tiz tiz = new tiz();
+            tizenegy tizenegy = new tizenegy();
+            tizenketto tizenketto = new tizenketto();
+            tizenharom tizenharom = new tizenharom();
+            tizennegy tizennegy = new tizennegy();
+            tizenot tizenot = new tizenot();
+            tizenhat tizenhat = new tizenhat();
+            tizenhet tizenhet = new tizenhet();
+            tizennyolc tizennyolc = new tizennyolc();
+            tizenkilenc tizenkilenc = new tizenkilenc();
+            husz husz = new husz();
+
             List<int> szamok_list = new List<int>();
             for (int i = 1; i <= 10; i++)
             {
@@ -43,6 +145,7 @@ namespace _0328_ajanlo
                 if(bekert > 0 && bekert <21)
                 {
                     szamok_list.Add(bekert);
+                   
                 }
             }
 
@@ -62,12 +165,134 @@ namespace _0328_ajanlo
                         command.ExecuteNonQuery();
                     }
                         
-                        
                 }
-                
             }
 
-            Console.WriteLine(Leggyakoribb());
+                using (var connection = new MySqlConnection(ConnectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT szam, COUNT(szam) as gyakorisag FROM szamok GROUP BY szam ORDER BY gyakorisag DESC"; 
+
+                    using (var command = new MySqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                        if (Convert.ToInt32((reader["szam"])) == 1)
+                        {
+                            egy.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 2)
+                        {
+                            ketto.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 3)
+                        {
+                            harom.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 4)
+                        {
+                            negy.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 5)
+                        {
+                            ot.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 6)
+                        {
+                            hat.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 7)
+                        {
+                            het.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 8)
+                        {
+                            nyolc.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 9)
+                        {
+                            kilenc.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 10)
+                        {
+                            tiz.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 11)
+                        {
+                            tizenegy.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 12)
+                        {
+                            tizenketto.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 13)
+                        {
+                            tizenharom.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 14)
+                        {
+                            tizennegy.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 15)
+                        {
+                            tizenot.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 16)
+                        {
+                            tizenhat.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 17)
+                        {
+                            tizenhet.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 18)
+                        {
+                            tizennyolc.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 19)
+                        {
+                            tizenkilenc.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+                        if (Convert.ToInt32((reader["szam"])) == 20)
+                        {
+                            husz.db = Convert.ToInt32(reader["gyakorisag"]);
+                        }
+
+                    }
+                    }
+                }
+
+            Dictionary<int,int> gyakorisagok = new Dictionary<int,int>();
+            gyakorisagok.Add(1, egy.db);
+            gyakorisagok.Add(2, ketto.db);
+            gyakorisagok.Add(3, harom.db);
+            gyakorisagok.Add(4, negy.db);
+            gyakorisagok.Add(5, ot.db);
+            gyakorisagok.Add(6, hat.db);
+            gyakorisagok.Add(7, het.db);
+            gyakorisagok.Add(8, nyolc.db);
+            gyakorisagok.Add(9, kilenc.db);
+            gyakorisagok.Add(10, tiz.db);
+            gyakorisagok.Add(11,tizenegy.db);
+            gyakorisagok.Add(12, tizenketto.db);
+            gyakorisagok.Add(13, tizenharom.db);
+            gyakorisagok.Add(14, tizennegy.db);
+            gyakorisagok.Add(15, tizenot.db);
+            gyakorisagok.Add(16, tizenhat.db);
+            gyakorisagok.Add(17, tizenhet.db);
+            gyakorisagok.Add(18, tizennyolc.db);
+            gyakorisagok.Add(19, tizenkilenc.db);
+            gyakorisagok.Add(20, husz.db);
+            var rendezett = gyakorisagok.OrderBy(x => x.Value);
+            var legnagyobbtol = rendezett.Reverse();
+
+
+            Console.WriteLine(Leggyakoribb() + "\n");
+            foreach (var l in legnagyobbtol)
+            {
+                Console.WriteLine($"Szám: {l.Key}, Gyakoriság: {l.Value}");
+            }
 
 
 
