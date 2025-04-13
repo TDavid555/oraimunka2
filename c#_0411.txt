@@ -1,0 +1,255 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace _0411
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //1.
+
+            Dictionary<string, Dictionary<string, int>> orszagok = new Dictionary<string, Dictionary<string, int>>();
+            Dictionary<string, int> magyar_varosok = new Dictionary<string, int>();
+            Dictionary<string, int> roman_varosok = new Dictionary<string, int>();
+
+            magyar_varosok.Add("Budapest", 10);
+            magyar_varosok.Add("Fehergyarmat", 1);
+            magyar_varosok.Add("Nyiregyhaza", 3);
+
+            roman_varosok.Add("Bukarest", 9);
+            roman_varosok.Add("Brasso", 3);
+            roman_varosok.Add("Arad", 4);
+
+            orszagok.Add("Magyarorszag", magyar_varosok);
+            orszagok.Add("Romania", roman_varosok);
+
+            Dictionary<string, int> nepessegek = new Dictionary<string, int>();
+            foreach (KeyValuePair<string, Dictionary<string, int>> o in orszagok)
+            {
+                int lakokszama = 0;
+                var varoslakok = o.Value.Values;
+                foreach (var v in varoslakok)
+                {
+                    lakokszama += v;
+                }
+                nepessegek.Add(o.Key, lakokszama);
+                Console.WriteLine($"{o.Key}, {lakokszama}");
+
+            }
+
+            int max = nepessegek.Values.Max();
+            string legnepesebb = "";
+            foreach (var n in nepessegek)
+            {
+                if (n.Value == max)
+                {
+                    legnepesebb = n.Key;
+                }
+            }
+
+            Console.WriteLine($"A legnépesebb ország: {legnepesebb}, népessége: {max}");
+
+
+            //2.
+
+            List<int> homersekletek = new List<int>()
+            {
+                -5,1,20,22,16,33,25
+            };
+
+            int osszeg = 0;
+            bool volte = false;
+            foreach (int h in homersekletek)
+            {
+                osszeg += h;
+                if (h <= 0)
+                {
+                    volte = true;
+                }
+            }
+
+
+            Console.WriteLine($"Átlag hőmérséklet: {osszeg / homersekletek.Count}");
+            if (volte)
+            {
+                Console.WriteLine("Volt fagyos nap.");
+            }
+            else
+            {
+                Console.WriteLine("Nem volt fagyos nap.");
+            }
+
+
+            int max_ho = homersekletek.Max();
+            int max_index = homersekletek.IndexOf(max_ho) + 1;
+
+            Console.WriteLine($"A legmelegebb nap: {max_index}. nap ({max_ho}°C)");
+
+
+            //3.
+            HashSet<string> csop1 = new HashSet<string>() { "foci", "kézi", "röplabda", "úszás" };
+            HashSet<string> csop2 = new HashSet<string>() { "foci", "kosár", "röplabda", "úszás" };
+            HashSet<string> csop3 = new HashSet<string>() { "foci", "kézi", "röplabda", "vívás" };
+
+            List<string> osszes_sportag = new List<string>();
+
+            osszes_sportag.AddRange(csop1);
+            osszes_sportag.AddRange(csop2);
+            osszes_sportag.AddRange(csop3);
+
+            Dictionary<string, int> szamlalo = new Dictionary<string, int>();
+
+            foreach (string sportag in osszes_sportag)
+            {
+                if (szamlalo.ContainsKey(sportag))
+                {
+                    szamlalo[sportag]++;
+                }
+                else
+                {
+                    szamlalo[sportag] = 1;
+                }
+            }
+
+            Console.Write("Mindháromban: ");
+            foreach (var item in szamlalo)
+            {
+                if (item.Value == 3)
+                {
+                    Console.Write(item.Key + " ");
+                }
+            }
+            Console.WriteLine();
+
+            Console.Write("Csak egyikben: ");
+            foreach (var item in szamlalo)
+            {
+                if (item.Value == 1)
+                {
+                    Console.Write(item.Key + " ");
+                }
+            }
+            Console.WriteLine();
+
+            Console.Write("Legalább kettőben: ");
+            foreach (var item in szamlalo)
+            {
+                if (item.Value >= 2)
+                {
+                    Console.Write(item.Key + " ");
+                }
+            }
+            Console.WriteLine();
+
+
+
+            //4.
+
+            Dictionary<string, List<string>> diakok = new Dictionary<string, List<string>>()
+            {
+                {"Anna", new List<string>{"Konyv2", "Konyv1"}},
+                {"Béla", new List<string>{"Konyv1", "Konyv3"}},
+                {"Csilla", new List<string>{"Konyv3", "Konyv2", "Konyv1"}}
+            };
+
+            Dictionary<string, int> gyakorisag = new Dictionary<string, int>();
+
+            foreach (var diak in diakok)
+            {
+                foreach (var konyv in diak.Value)
+                {
+                    if (gyakorisag.ContainsKey(konyv))
+                    {
+                        gyakorisag[konyv]++;
+                    }
+                    else
+                    {
+                        gyakorisag[konyv] = 1;
+                    }
+                }
+            }
+
+            
+            foreach (var item in gyakorisag)
+            {
+                Console.WriteLine($"{item.Key}: {item.Value} kölcsönzés");
+            }
+
+            int max_konyv = gyakorisag.Values.Max();
+            string legtobbetKolcsonzottKonyv = "";
+            foreach (var konyv in gyakorisag)
+            {
+                if (konyv.Value == max_konyv)
+                {
+                    legtobbetKolcsonzottKonyv = konyv.Key;
+                    break;
+                }
+            }
+            Console.WriteLine($"A legtöbbször kölcsönzött könyv: {legtobbetKolcsonzottKonyv}");
+            Console.WriteLine($"Különböző könyvek száma: {gyakorisag.Count}");
+
+
+            //5.
+
+            List<Dictionary<string, object>> autok = new List<Dictionary<string, object>>()
+            {
+                new Dictionary<string, object>{
+                    {"tipus", "Toyota Corolla"}, {"fogyasztas", 6.5}
+                },
+                new Dictionary<string, object>{
+                    {"tipus", "VW Golf"}, {"fogyasztas", 5.9}
+                },
+                new Dictionary<string, object>{
+                    {"tipus", "Ford Focus"}, {"fogyasztas", 6.1}
+                },
+                new Dictionary<string, object>{
+                    {"tipus", "Honda Civic"}, {"fogyasztas", 5.5}
+                }
+            };
+
+            double ossz_fogyasztas = 0;
+            for (int i = 0; i < autok.Count; i++)
+            {
+                double fogyasztas = Convert.ToDouble(autok[i]["fogyasztas"]);
+                ossz_fogyasztas += fogyasztas;
+            }
+
+            double atlag = ossz_fogyasztas / autok.Count;
+            Console.WriteLine($"Átlagos fogyasztás: {atlag} L/100km");
+
+            double legkisebb = Convert.ToDouble(autok[0]["fogyasztas"]);
+            string leggazdasagosabb = autok[0]["tipus"].ToString();
+
+            for (int i = 1; i < autok.Count; i++)
+            {
+                double aktualis_fogyasztas = Convert.ToDouble(autok[i]["fogyasztas"]);
+                if (aktualis_fogyasztas < legkisebb)
+                {
+                    legkisebb = aktualis_fogyasztas;
+                    leggazdasagosabb = autok[i]["tipus"].ToString();
+                }
+            }
+            Console.WriteLine($"A leggazdaságosabb típus: {leggazdasagosabb}");
+
+            Console.WriteLine("Autók átlag alatti fogyasztással:");
+            for (int i = 0; i < autok.Count; i++)
+            {
+                double fogyasztas = Convert.ToDouble(autok[i]["fogyasztas"]);
+                if (fogyasztas < atlag)
+                {
+                    string tipus = autok[i]["tipus"].ToString();
+                    Console.WriteLine($"{tipus} - {fogyasztas} L/100km");
+                }
+            }
+
+
+
+            Console.ReadLine();
+        }
+    }
+}
