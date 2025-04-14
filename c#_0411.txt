@@ -8,25 +8,23 @@ namespace _0411
 {
     internal class Program
     {
-        static void Main(string[] args)
+        //1.
+        static void Orszagok()
         {
-
-            //1.
-
             Dictionary<string, Dictionary<string, int>> orszagok = new Dictionary<string, Dictionary<string, int>>();
             Dictionary<string, int> magyar_varosok = new Dictionary<string, int>();
             Dictionary<string, int> roman_varosok = new Dictionary<string, int>();
 
-            magyar_varosok.Add("Budapest", 10);
-            magyar_varosok.Add("Fehergyarmat", 1);
-            magyar_varosok.Add("Nyiregyhaza", 3);
+            magyar_varosok.Add("Budapest", 1600000);
+            magyar_varosok.Add("Fehérgyarmat", 7000);
+            magyar_varosok.Add("Nyíregyháza", 115000);
 
-            roman_varosok.Add("Bukarest", 9);
-            roman_varosok.Add("Brasso", 3);
-            roman_varosok.Add("Arad", 4);
+            roman_varosok.Add("Bukarest", 1700000);
+            roman_varosok.Add("Brassó", 240000);
+            roman_varosok.Add("Arad", 430000);
 
-            orszagok.Add("Magyarorszag", magyar_varosok);
-            orszagok.Add("Romania", roman_varosok);
+            orszagok.Add("Magyarország", magyar_varosok);
+            orszagok.Add("Románia", roman_varosok);
 
             Dictionary<string, int> nepessegek = new Dictionary<string, int>();
             foreach (KeyValuePair<string, Dictionary<string, int>> o in orszagok)
@@ -53,10 +51,12 @@ namespace _0411
             }
 
             Console.WriteLine($"A legnépesebb ország: {legnepesebb}, népessége: {max}");
+        }
 
 
-            //2.
-
+        //2.
+        static void Homerseklet()
+        {
             List<int> homersekletek = new List<int>()
             {
                 -5,1,20,22,16,33,25
@@ -89,9 +89,12 @@ namespace _0411
             int max_index = homersekletek.IndexOf(max_ho) + 1;
 
             Console.WriteLine($"A legmelegebb nap: {max_index}. nap ({max_ho}°C)");
+        }
 
 
-            //3.
+        //3.
+        static void Sportagak()
+        {
             HashSet<string> csop1 = new HashSet<string>() { "foci", "kézi", "röplabda", "úszás" };
             HashSet<string> csop2 = new HashSet<string>() { "foci", "kosár", "röplabda", "úszás" };
             HashSet<string> csop3 = new HashSet<string>() { "foci", "kézi", "röplabda", "vívás" };
@@ -145,11 +148,12 @@ namespace _0411
                 }
             }
             Console.WriteLine();
+        }
 
 
-
-            //4.
-
+        //4.
+        static void Konyvtar()
+        {
             Dictionary<string, List<string>> diakok = new Dictionary<string, List<string>>()
             {
                 {"Anna", new List<string>{"Konyv2", "Konyv1"}},
@@ -174,14 +178,16 @@ namespace _0411
                 }
             }
 
-            
+
             foreach (var item in gyakorisag)
             {
                 Console.WriteLine($"{item.Key}: {item.Value} kölcsönzés");
             }
 
+
             int max_konyv = gyakorisag.Values.Max();
             string legtobbetKolcsonzottKonyv = "";
+
             foreach (var konyv in gyakorisag)
             {
                 if (konyv.Value == max_konyv)
@@ -192,25 +198,20 @@ namespace _0411
             }
             Console.WriteLine($"A legtöbbször kölcsönzött könyv: {legtobbetKolcsonzottKonyv}");
             Console.WriteLine($"Különböző könyvek száma: {gyakorisag.Count}");
+        }
 
 
-            //5.
-
+        //5.
+        static void Fogyasztas()
+        {
             List<Dictionary<string, object>> autok = new List<Dictionary<string, object>>()
             {
-                new Dictionary<string, object>{
-                    {"tipus", "Toyota Corolla"}, {"fogyasztas", 6.5}
-                },
-                new Dictionary<string, object>{
-                    {"tipus", "VW Golf"}, {"fogyasztas", 5.9}
-                },
-                new Dictionary<string, object>{
-                    {"tipus", "Ford Focus"}, {"fogyasztas", 6.1}
-                },
-                new Dictionary<string, object>{
-                    {"tipus", "Honda Civic"}, {"fogyasztas", 5.5}
-                }
+                new Dictionary<string, object>{ {"tipus", "Toyota Corolla"}, {"fogyasztas", 6.5} },
+                new Dictionary<string, object>{ {"tipus", "VW Golf"}, {"fogyasztas", 5.9} },
+                new Dictionary<string, object>{ {"tipus", "Ford Focus"}, {"fogyasztas", 6.1} },
+                new Dictionary<string, object>{ {"tipus", "Honda Civic"}, {"fogyasztas", 5.5} }
             };
+
 
             double ossz_fogyasztas = 0;
             for (int i = 0; i < autok.Count; i++)
@@ -220,11 +221,10 @@ namespace _0411
             }
 
             double atlag = ossz_fogyasztas / autok.Count;
-            Console.WriteLine($"Átlagos fogyasztás: {atlag} L/100km");
+            Console.WriteLine($"Átlagos fogyasztás: {atlag} l/100km");
 
             double legkisebb = Convert.ToDouble(autok[0]["fogyasztas"]);
             string leggazdasagosabb = autok[0]["tipus"].ToString();
-
             for (int i = 1; i < autok.Count; i++)
             {
                 double aktualis_fogyasztas = Convert.ToDouble(autok[i]["fogyasztas"]);
@@ -236,16 +236,40 @@ namespace _0411
             }
             Console.WriteLine($"A leggazdaságosabb típus: {leggazdasagosabb}");
 
-            Console.WriteLine("Autók átlag alatti fogyasztással:");
+
+            Console.WriteLine("Átlag alatti fogyasztású autók:");
             for (int i = 0; i < autok.Count; i++)
             {
                 double fogyasztas = Convert.ToDouble(autok[i]["fogyasztas"]);
                 if (fogyasztas < atlag)
                 {
                     string tipus = autok[i]["tipus"].ToString();
-                    Console.WriteLine($"{tipus} - {fogyasztas} L/100km");
+                    Console.WriteLine($"{tipus} - {fogyasztas} l/100km");
                 }
             }
+        }
+
+        static void Main(string[] args)
+        {
+
+            //1.
+            Orszagok();
+            Console.WriteLine();
+
+            //2.
+            Homerseklet();
+            Console.WriteLine();
+
+            //3.
+            Sportagak();
+            Console.WriteLine();
+
+            //4.
+            Konyvtar();
+            Console.WriteLine();
+
+            //5.
+            Fogyasztas();
 
 
 
