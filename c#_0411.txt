@@ -8,7 +8,7 @@ namespace _0411
 {
     internal class Program
     {
-        //1.
+        //1.===============================================================================================
         static void Orszagok()
         {
             Dictionary<string, Dictionary<string, int>> orszagok = new Dictionary<string, Dictionary<string, int>>();
@@ -54,7 +54,7 @@ namespace _0411
         }
 
 
-        //2.
+        //2.===============================================================================================
         static void Homerseklet()
         {
             List<int> homersekletek = new List<int>()
@@ -92,7 +92,7 @@ namespace _0411
         }
 
 
-        //3.
+        //3.===============================================================================================
         static void Sportagak()
         {
             HashSet<string> csop1 = new HashSet<string>() { "foci", "kézi", "röplabda", "úszás" };
@@ -107,15 +107,15 @@ namespace _0411
 
             Dictionary<string, int> szamlalo = new Dictionary<string, int>();
 
-            foreach (string sportag in osszes_sportag)
+            foreach (string s in osszes_sportag)
             {
-                if (szamlalo.ContainsKey(sportag))
+                if (szamlalo.ContainsKey(s))
                 {
-                    szamlalo[sportag]++;
+                    szamlalo[s]++;
                 }
                 else
                 {
-                    szamlalo[sportag] = 1;
+                    szamlalo[s] = 1;
                 }
             }
 
@@ -151,7 +151,7 @@ namespace _0411
         }
 
 
-        //4.
+        //4.===============================================================================================
         static void Konyvtar()
         {
             Dictionary<string, List<string>> diakok = new Dictionary<string, List<string>>()
@@ -201,7 +201,7 @@ namespace _0411
         }
 
 
-        //5.
+        //5.===============================================================================================
         static void Fogyasztas()
         {
             List<Dictionary<string, object>> autok = new List<Dictionary<string, object>>()
